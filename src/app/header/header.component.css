@@ -1,0 +1,38 @@
+header{
+    border-radius: 1px solid;
+}
+.moodle-icon-svg{
+    height: 50px;
+    padding: 8px 8px 8px 0;
+    width: 50px;
+}
+
+.moodle-text{        
+    font-weight: 700;
+    height: 50px;
+    width: 50px;
+    color: orange;
+}
+.logo{
+    text-decoration: none;
+}
+
+.login{
+    background-color:orange;
+    border-color:orange;
+    color: aliceblue;
+}
+
+.signup{
+    background-color:orange;
+    border-color:orange;
+    color: aliceblue;
+}
+
+.signup:hover{
+    opacity: 0.6;
+}
+
+.login:hover{
+    opacity: 0.6;
+}

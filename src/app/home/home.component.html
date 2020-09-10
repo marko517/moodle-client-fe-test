@@ -1,0 +1,34 @@
+<div class="home-body">
+
+  <div class="container">
+    <div class="row">
+      <hr/>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Full name</th>
+            <th scope="col">Course Id</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let course of courses; let i = index" [attr.data-index]="i">
+            <th scope="row">{{i+1}}</th>
+            <td>{{course.fullname}}</td>
+            <td>{{course.id}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <form [formGroup]="searchUserForm">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Search user by id: </label>
+        <input type="text" class="form-control" placeholder="Enter user id" formControlName="userId">
+        <button class="btn btn-primary" (click)="searchUser()">Search</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
