@@ -1,0 +1,47 @@
+<div class="users-body">
+
+  <div class="container">
+    <form [formGroup]="searchUserForm">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Search Specific Users by ID: </label>
+        <input type="text" class="form-control" placeholder="Enter user id" formControlName="userId">
+        <button class="btn btn-primary" (click)="searchUsers()">Search</button>
+      </div>
+    </form>
+    <div class="row">
+      <hr/>
+      <table *ngIf="userWrapper" class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Number</th>
+            <th scope="col">User Fullname</th>
+            <th scope="col">User ID</th>
+            <th scope="col">User First Name</th>
+            <th scope="col">User Last Name</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Department</th>
+            <th scope="col">City</th>
+            <th scope="col">Country</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="users">
+          <tr *ngFor="let user of users; let i = index" [attr.data-index]="i">
+            <th scope="row">{{i+1}}</th>
+            <td>{{user.fullname}}</td>
+            <td>{{user.id}}</td>
+            <td>{{user.firstname}}</td>
+            <td>{{user.lastname}}</td>
+            <td>{{user.username}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.department}}</td>
+            <td>{{user.city}}</td>
+            <td>{{user.country}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+ 
+</div>
+

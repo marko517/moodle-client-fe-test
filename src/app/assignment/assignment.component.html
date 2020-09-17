@@ -1,0 +1,32 @@
+<div class="home-body">
+    <div class="container">
+      <form [formGroup]="searchAssignmentForm">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Search Assignment by Course id: </label>
+          <input type="text" class="form-control" placeholder="Enter user id" formControlName="assignmentId">
+          <button class="btn btn-primary" (click)="searchAssignment()">Search</button>
+        </div>
+      </form>
+      <div class="row">
+        <hr/>
+        <table *ngIf="coursesWrapper" class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Number</th>
+              <th scope="col">Course ID</th>
+              <th scope="col">Assignment ID</th>
+              <th scope="col">Assignment Name</th>
+            </tr>
+          </thead>
+          <tbody *ngIf=assignments>
+            <tr *ngFor="let assignment of assignments; let i = index" [attr.data-index]="i">
+              <th scope="row">{{i+1}}</th>
+              <td>{{assignment.course}}</td>
+              <td>{{assignment.id}}</td>
+              <td>{{assignment.name}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

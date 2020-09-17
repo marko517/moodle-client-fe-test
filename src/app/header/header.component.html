@@ -1,15 +1,25 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="flex-grow-1">
-      <a aria-label="Home" class="logo" routerLink="/login">
+      <a aria-label="Home" class="logo" routerLink="/home">
+        <img src="/assets/images/moodle.svg" alt="moodle-logo" class="moodle-icon-svg">
         <span class="moodle-text">
           Moodle Submission Management Application
         </span>
       </a>
     </div>
     <div class="flex-grow-1 float-right">
-      <a routerLink="/signup" class="float-right signup mr-2">Sign up</a>
-      <a routerLink="/login" class="float-right login mr-2">Login</a>
+      <div *ngIf="isLoggedIn()">
+        <button type="button" routerLink="/assignments" class="btn btn-outline-primary mr-2">Assignments</button>
+        <button type="button" routerLink="/users" class="btn btn-outline-primary mr-2">Users</button>
+        <button type="button" routerLink="/submissions" class="btn btn-outline-primary mr-2">Submissions</button>
+        <button type="button" routerLink="/filehandler" class="btn btn-outline-primary mr-2">Submission Checker</button>
+        <button type="button" class="float-right logout mr-2" (click)="logout()">Logout</button>
+      </div>
     </div>
+      <div *ngIf="!isLoggedIn()">
+        <a routerLink="/signup" class="float-right signup mr-2">Sign up</a>
+        <a routerLink="/login" class="float-right login mr-2">Login</a>
+      </div>
   </nav>
 </header>

@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { AuthService } from './auth/shared/auth.service';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError, filter, switchMap, take } from 'rxjs/operators';
 import { LoginResponse } from './auth/login/login-response.payload';
+
 
 @Injectable( {
     providedIn: 'root'
@@ -16,19 +17,23 @@ export class TokenInterceptor implements HttpInterceptor {
     constructor(public authService: AuthService) {
     }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        if (req.url.indexOf('refresh') !== -1 || req.url.indexOf('login') !== -1) {
+            return next.handle(req);
+        }
+
         const jwtToken = this.authService.getJWTToken();
 
-        if (jwtToken && !request.url.includes('authn')) {
-            request = this.addToken(request, jwtToken);
-        }
-        return next.handle(request).pipe(catchError(error => {
-            if (error instanceof HttpErrorResponse && error.status === 403) {
-                return this.handleAuthErrors(request, next);
+        if(jwtToken) {
+        return next.handle(this.addToken(req, jwtToken)).pipe(catchError(error => {
+            if (error instanceof HttpErrorResponse && error.status === 403 ) {
+                return this.handleAuthErrors(req, next);
             } else {
                 return throwError(error);
             }
         }));
+    }
+    return next.handle(req);
     }
 
     private handleAuthErrors(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -46,14 +51,21 @@ export class TokenInterceptor implements HttpInterceptor {
                     return next.handle(this.addToken(request, refreshTokenResponse.authenticationToken));
                 })
             )
+        } else {
+            return this.refreshTokenSubject.pipe(
+                filter(result => result !== null),
+                take(1),
+                switchMap((response) => {
+                    return next.handle(this.addToken(request, this.authService.getJWTToken()))
+                })
+            )
         }
     }
-    addToken(request: HttpRequest<any>, jwtToken: any) {
-        return request.clone({
-            setHeaders: {
-              'Content-Type' : 'application/json',
-              'Authorization': 'Bearer ' + jwtToken,
-            },
-          });
+    addToken(req: HttpRequest<any>, jwtToken: any) {
+        return req.clone({
+            headers: req.headers.set('Authorization',
+                'Bearer ' + jwtToken)
+        });
     }
+
 }

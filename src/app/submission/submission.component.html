@@ -1,0 +1,47 @@
+<div class="home-body">
+    <div class="container">
+      <form [formGroup]="searchSubmissionForm">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Search Submissions by Assignment Id: </label>
+          <input type="text" class="form-control" placeholder="Enter Asignment Id" formControlName="submissionId">
+          <button class="btn btn-primary" (click)="searchSubmissions()">Search</button>
+        </div>
+      </form>
+
+        <table *ngIf="assignment" class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Submission ID</th>
+              <th scope="col">User ID</th>
+              <th scope="col">Attempt Number</th>
+              <th scope="col">Time Created</th>
+              <th scope="col">Time Modified</th>
+              <th scope="col">Status</th>
+              <th scope="col">Files</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let submission of assignment.submissions">
+                <td>{{submission.id}}</td>
+                <td>{{submission.userid}}</td>
+                <td>{{submission.attemptnumber}}</td>
+                <td>{{submission.timecreated}}</td>
+                <td>{{submission.timemodified}}</td>
+                <td>{{submission.status}}</td>
+                <td>
+                  <ul>
+                    <li *ngFor="let file of submission.plugins[0].fileareas[0].files">
+                      Name: {{file.filename}}
+                      <br>Size: {{file.filesize}}
+                      <br>File Modified At: {{file.filemodified}}
+                      <br>File: <a href={{file.fileurl}}>{{file.filename}}</a>
+                      <br>File Type: {{file.mimetype}}
+                    </li>
+                  </ul>
+                </td>                
+              </tr>
+          </tbody>
+        </table>
+
+    </div>
+  </div>

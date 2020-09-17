@@ -14,6 +14,10 @@ import { HomeComponent } from './home/home.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TokenInterceptor } from './token-interceptor';
+import { AssignmentComponent } from './assignment/assignment.component';
+import { SubmissionComponent } from './submission/submission.component';
+import { UserComponent } from './user/user.component';
+import { FilehandlerComponent } from './filehandler/filehandler.component';
 
 
 @NgModule({
@@ -22,7 +26,11 @@ import { TokenInterceptor } from './token-interceptor';
     HeaderComponent,
     SignUpComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    AssignmentComponent,
+    SubmissionComponent,
+    UserComponent,
+    FilehandlerComponent
   ],
   imports: [
     BrowserModule,
